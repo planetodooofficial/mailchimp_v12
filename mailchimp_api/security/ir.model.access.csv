@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mailchimp,access.mailchimp,model_mailchimp,,1,1,1,1
+access_mailchimp_lists,access.mailchimp.lists,model_mailchimp_lists,,1,1,1,1
+access_mailchimp_list_members,access.mailchimp.lists.members,model_mailchimp_lists_members,,1,1,1,1
+access_mailchimp_template,access.mailchimp.template,model_mailchimp_template,,1,1,1,1

@@ -1,0 +1,42 @@
+<odoo>
+    <record id="inherited_mass_mailing_form" model="ir.ui.view">
+        <field name="name">inherited.mass.mailing</field>
+        <field name="model">mail.mass_mailing</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/group[1]/label[1]" position="replace">
+                <label for="name" string="Name"/>
+            </xpath>
+            <xpath expr="//field[@name='mailing_model_id']" position="replace">
+                <field name="mailing_model_id" widget="selection" readonly="1"/>
+            </xpath>
+            <xpath expr="//sheet/group[1]/div[2]" position="after">
+                <field name="subject" required="1"/>
+                <field name="exported" readonly="1"/>
+                <field name="use_mc_template"/>
+                <field name="template_id" style="width:30%" attrs="{'invisible':[('use_mc_template','=',False)]}"/>
+            </xpath>
+            <xpath expr="//header">
+                <button name="send_to_mailchimp" string="Send To Mailchimp" type="object" attrs="{'invisible':[('exported','=',True)]}" class="btn-success"/>
+            </xpath>
+            <xpath expr="//sheet/notebook/page[1]" position="attributes">
+                <attribute name="attrs">{'invisible':[('use_mc_template','=',True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+     <record id="inherited_mass_mailing_contact_form0" model="ir.ui.view">
+        <field name="name">inherited.mass.mailing.contact.form.0</field>
+        <field name="model">mail.mass_mailing.contact</field>
+        <field name="inherit_id" ref="mass_mailing.view_mail_mass_mailing_contact_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="attributes">
+                 <attribute name="placeholder">Enter Your Full Name</attribute>
+            </xpath>
+        </field>
+     </record>
+
+
+
+</odoo>

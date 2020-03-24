@@ -1,0 +1,125 @@
+<odoo>
+    <record id="mailchimp_form" model="ir.ui.view">
+        <field name="name">mailchimp.form</field>
+        <field name="model">mailchimp</field>
+        <field name="arch" type="xml">
+            <form create="false" delete="false">
+                <header>
+                    <button name="test_connection" string="Test Connection" type="object" class="btn-success"/>
+                    <button name="get_all_templates" string="Get Mailchimp Templates" groups="base.group_no_one" type="object" class="btn-primary"/>
+                    <button name="get_all_lists" string="Get Mailchimp Lists" type="object" groups="base.group_no_one" class="btn-warning"/>
+                </header>
+                <group>
+                    <field name="name" readonly="1"/>
+                    <field name="api_key" required="1" placeholder="Mailchimp Key"/>
+                    <field name="api_email" required="1" placeholder="Mailchimp Username"/>
+                    <field name="list_lines" readonly="1">
+                        <tree editable="bottom">
+                            <field name="mailing_lists" required="1" widget="many2many_tags"/>
+                            <field name="mailchimp_list_id"/>
+                        </tree>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="mailchimp_tree" model="ir.ui.view">
+        <field name="name">mailchimp.tree</field>
+        <field name="model">mailchimp</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="mailchimp_action" model="ir.actions.act_window">
+        <field name="name">MailChimp</field>
+        <field name="res_model">mailchimp</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="mailchimp_lists_form" model="ir.ui.view">
+        <field name="name">mailchimp.lists.form</field>
+        <field name="model">mailchimp.lists</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" delete="false">
+                <header>
+                    <button name="get_members" string="Get Members" type="object" class="btn-success"/>
+                </header>
+                <group>
+                    <field name="mailchimp_list_id" readonly="1" required="1"/>
+                    <field name="members_line">
+                        <tree editable="bottom">
+                            <field name="hash"/>
+                            <field name="member_id"/>
+                            <field name="mc_list"/>
+                        </tree>
+                    </field>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="mailchimp_lists_tree" model="ir.ui.view">
+        <field name="name">mailchimp.members.tree</field>
+        <field name="model">mailchimp.lists</field>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <field name="mailchimp_list_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="mailchimp_lists_action" model="ir.actions.act_window">
+        <field name="name">MailChimp Members</field>
+        <field name="res_model">mailchimp.lists</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="mailchimp_template_form" model="ir.ui.view">
+        <field name="name">mailchimp.template.form</field>
+        <field name="model">mailchimp.template</field>
+        <field name="arch" type="xml">
+            <form create="false" edit="false" delete="false">
+                <group>
+                    <field name="mc_template_id" readonly="1"/>
+                    <field name="name"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="mailchimp_template_tree" model="ir.ui.view">
+        <field name="name">mailchimp.template.tree</field>
+        <field name="model">mailchimp.template</field>
+        <field name="arch" type="xml">
+            <tree create="false">
+                <field name="name"/>
+                <field name="mc_template_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="mailchimp_template_action" model="ir.actions.act_window">
+        <field name="name">MailChimp Templates</field>
+        <field name="res_model">mailchimp.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="MailChimp" id="mailchimp_root" parent="mass_mailing.mass_mailing_menu_root"
+              groups="mass_mailing.group_mass_mailing_user"  sequence="101"/>
+
+    <menuitem name="MailChimp" id="mailchimp" parent="mailchimp_api.mailchimp_root"
+              action="mailchimp_api.mailchimp_action" groups="mass_mailing.group_mass_mailing_user" />
+
+    <menuitem name="MailChimp Lists" id="mailchimp_lists" parent="mailchimp_api.mailchimp_root"
+              action="mailchimp_api.mailchimp_lists_action" groups="base.group_no_one" />
+
+    <menuitem name="MailChimp Templates" id="mailchimp_templates" parent="mailchimp_api.mailchimp_root"
+              action="mailchimp_api.mailchimp_template_action" groups="mass_mailing.group_mass_mailing_user"/>
+</odoo>
